@@ -1,8 +1,8 @@
 public class Fila {
-    private Registro[] dados;
+    private Documento[] dados;
     private int primeiro, ultimo, ocupacao;
     public Fila (int capacidade) {
-        dados = new Registro[capacidade];
+        dados = new Documento[capacidade];
         //por clareza
         primeiro = 0;
         ultimo = 0;
@@ -20,15 +20,15 @@ public class Fila {
     private int proxima (int pos) {
         return (pos + 1) % dados.length;
     }
-    public void enfileira (Registro e) {
+    public void enfileira (Documento doc) {
         if (filaCheia()) throw new RuntimeException("falha no enfileiramento");
-        dados[ultimo] = e;
+        dados[ultimo] = doc;
         ultimo = proxima(ultimo);
         ocupacao++;
     }
-    public Registro desenfileira () {
+    public Documento desenfileira () {
         if (filaVazia()) throw new RuntimeException("falha no desenfileiramento");
-        Registro temp = dados[primeiro];
+        Documento temp = dados[primeiro];
         primeiro = proxima(primeiro);
         ocupacao--;
         return temp;
@@ -71,8 +71,18 @@ public class Fila {
         return s;
     }
 
-    public Registro buscaArquivo(String arquivo) {
-        if (filaVazia()) return null;
+    public int getOcupacao() {
+        return ocupacao;
+    }
+    public boolean estaNaFila(String arquivo) {
+        for (int i=primeiro, cont=0; cont < ocupacao; cont++) {
+            if (dados[i].getNomeArquivo() == arquivo) return true;
+            i = proxima(i);
+        }
+        return false;
+    }
+
+    public Documento buscaDocumento(String arquivo) {
         for (int i=primeiro, cont=0; cont < ocupacao; cont++) {
             if (dados[i].getNomeArquivo() == arquivo) return dados[i];
             i = proxima(i);
