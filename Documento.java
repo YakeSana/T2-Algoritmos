@@ -7,7 +7,7 @@ class Documento {
     private String nomeUsuario;
     private LocalDateTime horaSolicitacao;
     private LocalDateTime horaImpressao;
-    private LocalDateTime horarioReimpressao;
+    private LocalDateTime horarioAtual;
     private Duration tempoEspera;
 
     public Documento(String nomeArquivo, String nomeUsuario) {
@@ -51,12 +51,12 @@ class Documento {
                 horaSolicitacao.format(formatter));
     }
 
-    public void setHorarioReimpressao() {
-        this.horarioReimpressao = LocalDateTime.now();
+    public void setHorarioAtual() {
+        this.horarioAtual = LocalDateTime.now();
     }
 
     public long getTempoEsperaReimpressao() {
-        if (horarioReimpressao == null) setHorarioReimpressao();
-        return Duration.between(horaSolicitacao, horarioReimpressao).toSeconds();
+        setHorarioAtual();
+        return Duration.between(horaSolicitacao, horarioAtual).toSeconds();
     }
 }

@@ -8,54 +8,54 @@ public class PilhaReimpressao {
 
     public boolean solicitarReimpressao(String nomeArquivo, String nomeUsuario) {
         if (pilha.estaCheio()) {
-            System.out.println("ERRO: Capacidade máxima da pilha atingida. Não foi possível adicionar o documento.");
+            System.out.println("\nNão foi possível adicionar o documento, a pilha de impressão está cheia.");
             return false;
         }
 
         Documento doc = new Documento(nomeArquivo, nomeUsuario);
         pilha.push(doc);
-        System.out.println("Documento '" + nomeArquivo + "' adicionado à pilha de reimpressão.");
+        System.out.println("\nDocumento '" + nomeArquivo + "' adicionado à pilha de impressão.");
         return true;
     }
 
     public void imprimir() {
         if (pilha.estaVazio()) {
-            System.out.println("AVISO: Pilha de reimpressão vazia. Nenhum documento para reimprimir.");
+            System.out.println("\nNão há nenhum documento na pilha de impressão.");
             return;
         }
 
         Documento doc = pilha.pop();
-        doc.setHorarioReimpressao();
+        doc.setHorarioAtual();
         long tempoEspera = doc.getTempoEsperaReimpressao();
 
-        System.out.println("Reimprimindo documento: " + doc.getNomeArquivo());
+        System.out.println("\nReimprimindo documento: " + doc.getNomeArquivo());
         System.out.println("Solicitado por: " + doc.getNomeUsuario());
         System.out.println("Tempo de espera: " + tempoEspera + " segundos");
     }
 
     public Documento consultarDocumento(String nomeArquivo) {
         if (pilha.estaVazio()) {
-            System.out.println("Pilha de reimpressão vazia.");
+            System.out.println("\nO Documento não foi encontrado pois a pilha de impressão está vazia.");
             return null;
         }
 
         if (pilha.contem(nomeArquivo)) {
             Documento doc = pilha.consultaPorNome(nomeArquivo);
-            System.out.println("Documento encontrado na posição " + pilha.indiceDe(nomeArquivo) + " a partir do topo.");
+            System.out.println("\n"+doc.getNomeArquivo() + " foi encontrado na posição " + pilha.indiceDe(nomeArquivo) + " a partir do topo.");
             System.out.println("Solicitado por: " + doc.getNomeUsuario());
             System.out.println("Horário da solicitação: " + doc.getHoraSolicitacao());
             System.out.println("Tempo na fila: " + doc.getTempoEsperaReimpressao() + " segundos");
             return doc;
         }
 
-        System.out.println("Documento '" + nomeArquivo + "' não encontrado na pilha de reimpressão.");
+        System.out.println("\nDocumento '" + nomeArquivo + "' não encontrado na pilha de impressão.");
         return null;
     }
 
     
     public void gerarRelatorio() {
         if (pilha.estaVazio()) {
-            System.out.println("Pilha de reimpressão vazia.");
+            System.out.println("\nNão foi possível gerar o relatório pois a pilha de impressão está vazia.");
             return;
         }
 

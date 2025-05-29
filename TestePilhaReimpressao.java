@@ -5,10 +5,15 @@ public class TestePilhaReimpressao {
         pilha.solicitarReimpressao("relatorio_final.pdf", "João Silva");
         pilha.solicitarReimpressao("apresentacao.pptx", "Maria Souza");
         pilha.solicitarReimpressao("contrato.docx", "Carlos Oliveira");
+        
+        esperar(2000);
 
         pilha.consultarDocumento("apresentacao.pptx");
 
+
         pilha.gerarRelatorio();
+
+        esperar(2000);
 
         pilha.imprimir();
 
@@ -20,5 +25,13 @@ public class TestePilhaReimpressao {
         pilha.solicitarReimpressao("doc4.pdf", "Marcos");
 
         pilha.gerarRelatorio();
+    }
+
+    private static void esperar(int milisegundos){
+        try {
+            Thread.sleep(milisegundos);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
